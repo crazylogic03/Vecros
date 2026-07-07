@@ -50,6 +50,27 @@ Resources:
             Path: /inspections
             Method: post
 
+  ListWarehouseInspectionsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: listWarehouseInspections.app.lambda_handler
+
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref DroneInspectionTable
+
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref DroneInspectionTable
+
+      Events:
+        ListWarehouseInspections:
+          Type: Api
+          Properties:
+            Path: /warehouses/{warehouseId}/inspections
+            Method: get
+
 Outputs:
   ApiUrl:
     Description: API Gateway endpoint URL
