@@ -1,10 +1,12 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
+Description: Drone Inspection Backend
 
 Globals:
   Function:
     Runtime: python3.11
     Timeout: 10
+    MemorySize: 128
 
 Resources:
 
@@ -13,23 +15,15 @@ Resources:
     Properties:
       TableName: DroneInspectionTable
       BillingMode: PAY_PER_REQUEST
+
       AttributeDefinitions:
         - AttributeName: PK
           AttributeType: S
         - AttributeName: SK
           AttributeType: S
+
       KeySchema:
         - AttributeName: PK
           KeyType: HASH
         - AttributeName: SK
           KeyType: RANGE
-
-  CreateInspectionFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: functions/createInspection/
-      Handler: app.lambda_handler
-      Runtime: python3.11
-      Environment:
-        Variables:
-          TABLE_NAME: DroneInspectionTable
