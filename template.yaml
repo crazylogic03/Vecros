@@ -34,8 +34,8 @@ Resources:
   CreateInspectionFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: src/createInspection/
-      Handler: app.lambda_handler
+      CodeUri: src/
+      Handler: createInspection.app.lambda_handler
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref DroneInspectionTable
