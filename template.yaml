@@ -92,6 +92,27 @@ Resources:
             Path: /drones/{droneId}/inspections
             Method: get
 
+  GenerateUploadUrlFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: generateUploadUrl.app.lambda_handler
+
+      Policies:
+        - S3CrudPolicy:
+            BucketName: !Ref InspectionImagesBucket
+
+      Environment:
+        Variables:
+          BUCKET_NAME: !Ref InspectionImagesBucket
+
+      Events:
+        GenerateUploadUrl:
+          Type: Api
+          Properties:
+            Path: /upload-url
+            Method: post
+
 Outputs:
   ApiUrl:
     Description: API Gateway endpoint URL
