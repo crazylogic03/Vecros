@@ -15,15 +15,37 @@ Resources:
     Properties:
       TableName: DroneInspectionTable
       BillingMode: PAY_PER_REQUEST
-
       AttributeDefinitions:
         - AttributeName: PK
           AttributeType: S
         - AttributeName: SK
           AttributeType: S
-
       KeySchema:
         - AttributeName: PK
           KeyType: HASH
         - AttributeName: SK
           KeyType: RANGE
+
+  InspectionImagesBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "${AWS::StackName}-inspection-images"
+
+  CreateInspectionFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/createInspection/
+      Handler: app.lambda_handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref DroneInspectionTable
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref DroneInspectionTable
+          BUCKET_NAME: !Ref InspectionImagesBucket
+      Events:
+        CreateInspection:
+          Type: Api
+          Properties:
+            Path: /inspections
+            Method: post
