@@ -113,6 +113,27 @@ Resources:
             Path: /upload-url
             Method: post
 
+  ListInspectionImagesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: listInspectionImages.app.lambda_handler
+
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref DroneInspectionTable
+
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref DroneInspectionTable
+
+      Events:
+        ListInspectionImages:
+          Type: Api
+          Properties:
+            Path: /inspections/{inspectionId}/images
+            Method: get
+
 Outputs:
   ApiUrl:
     Description: API Gateway endpoint URL
