@@ -49,3 +49,8 @@ Resources:
           Properties:
             Path: /inspections
             Method: post
+
+Outputs:
+  ApiUrl:
+    Description: API Gateway endpoint URL
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
