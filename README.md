@@ -126,6 +126,8 @@ PK = INSPECTION#INS001
 SK = IMAGE#image1.jpg
 ```
 
+Image metadata is stored in DynamoDB when a pre-signed upload URL is generated. This enables efficient retrieval of all images belonging to an inspection and demonstrates the Inspection → Images one-to-many relationship.
+
 ---
 
 # 📌 DynamoDB Access Patterns
