@@ -102,9 +102,13 @@ Resources:
         - S3CrudPolicy:
             BucketName: !Ref InspectionImagesBucket
 
+        - DynamoDBCrudPolicy:
+            TableName: !Ref DroneInspectionTable
+
       Environment:
         Variables:
           BUCKET_NAME: !Ref InspectionImagesBucket
+          TABLE_NAME: !Ref DroneInspectionTable
 
       Events:
         GenerateUploadUrl:
